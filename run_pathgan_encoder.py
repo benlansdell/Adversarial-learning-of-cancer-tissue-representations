@@ -8,6 +8,9 @@ import os
 # Folder permissions for cluster.
 os.umask(0o002)
 
+#python run_pathgan_encoder.py --dataset comet_512 --dbs_path /mnt/storage/COMET/pathology_gan_data/
+
+
 parser = argparse.ArgumentParser(description='PathologyGAN Encoder trainer.')
 parser.add_argument('--model',         dest='model',         type=str,            default='PathologyGAN_Encoder',   help='Model name.')
 parser.add_argument('--img_size',      dest='img_size',      type=int,            default=224,                      help='Image size for the model.')
@@ -38,11 +41,17 @@ restore          = args.restore
 report           = args.report
 check_every      = args.check_every
 
+dbs_path = '/mnt/storage/COMET/pathology_gan_data/'
+dataset = 'comet_512'
+batch_size = 16
+
 # Main paths for data output and databases.
 if main_path is None:
-	main_path = os.path.dirname(os.path.realpath(__file__))
+	#main_path = os.path.dirname(os.path.realpath(__file__))
+	main_path = '.'
 if dbs_path is None:
-	dbs_path = os.path.dirname(os.path.realpath(__file__))
+	dbs_path = '.'
+	#dbs_path = os.path.dirname(os.path.realpath(__file__))
 
 # Dataset information.
 name_run      = 'h%s_w%s_n%s_zdim%s' % (image_height, image_width, image_channels, z_dim)
@@ -87,3 +96,11 @@ with tf.Graph().as_default():
     losses = pathgan_encoder.train(epochs=epochs, data_out_path=data_out_path, data=data, restore=restore, print_epochs=10, checkpoint_every=check_every, report=report)
 
 
+# Dataset information.
+# data_out_path = os.path.join(main_path, 'data_model_output')
+# data_out_path = os.path.join(data_out_path, model)
+# if note: data_out_path = os.path.join(data_out_path, note)
+
+# dataset='comet_512'
+# marker='he'
+# note='512_all'

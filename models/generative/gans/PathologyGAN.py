@@ -13,7 +13,7 @@ from models.tools import *
 from models.loss import *
 from models.ops import *
 
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 import numpy as np
 
 
